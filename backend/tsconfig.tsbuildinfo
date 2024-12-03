@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.7.2"}
+{"root":["./src/index.ts","./src/config/env.ts","./src/controller/index.ts","./src/routes/mainRoute.ts","./src/service/anthropicService.ts"],"version":"5.7.2"}
