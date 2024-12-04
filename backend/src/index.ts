@@ -1,11 +1,13 @@
 import express from "express";
 import mainRouter from "./routes/mainRoute.js";
 import { PORT } from "./config/env.js";
+import cors from "cors";
 
 const app = express();
 const port = PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).json({
