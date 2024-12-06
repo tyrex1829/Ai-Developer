@@ -18,7 +18,6 @@ export const templateController = async (req: Request, res: Response) => {
     messages: [{ role: "user", content: prompt }],
     model: "claude-3-5-sonnet-20241022",
     max_tokens: 200,
-    temperature: 0,
     system:
       "Return either node , react or next based on what do you think this project should be. Only return a single word either 'node' , 'react' or 'next'. Do not return anything extra",
   });
@@ -65,17 +64,16 @@ export const templateController = async (req: Request, res: Response) => {
 export const chatController = async (req: Request, res: Response) => {
   const messages = req.body.messages;
 
-  anthropic.messages
-    .stream({
-      messages: messages,
-      model: "claude-3-5-sonnet-20241022",
-      max_tokens: 8192,
-      system: getSystemPrompt(),
-    })
-    .on("text", (text) => {
-      console.log(text);
-    });
+  const response = await anthropic.messages.create({
+    messages: messages,
+    model: "claude-3-5-sonnet-20241022",
+    max_tokens: 8192,
+    system: getSystemPrompt(),
+  });
 
-  res.status(200).json({});
-  return;
+  console.log(response);
+
+  res.json({
+    response: (response.content[0] as TextBlock)?.text,
+  });
 };
